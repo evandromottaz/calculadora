@@ -1,8 +1,8 @@
 .calculadora {
-  border: 2px solid black;
-  padding: 20px 10px;
+  box-shadow: 4px 4px 7px rgb(0, 0, 0, 0.5);
+  padding: 15px;
   border-radius: 5px;
-  background: linear-gradient(#118f11, #003600);
+  background: #000;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -11,19 +11,32 @@
 }
 
 .display {
-  border: 2px solid #003600;
-  height: 50px;
-  border-radius: 5px;
-  padding: 10px 15px;
+  border: 3px solid #689c97;
+  background-color: #b7fdfd;
+  width: 100%;
+  box-sizing: border-box;
+  height: 70px;
+  border-radius: 10px;
+  padding: 5px 10px;
   text-align: center;
-  font-size: 3em;
-  font-family: sans-serif;
-  color: #034903;
-  background: white;
+  font-family: monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.display .current {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.display .computed {
+  font-size: 1.2rem;
 }
 
 .keyboard {
-  border: 2px solid #003600;
+  border: 3px solid #a6aca6;
   border-radius: 5px;
   margin-top: 20px;
   display: grid;
@@ -52,11 +65,11 @@
   background: black;
 }
 
-[data-calc='c'] {
+[data-clear] {
   grid-column: 1/3;
 }
 
-[data-calc='='].operators {
+[data-equal] {
   grid-column: 3/5;
   background-color: darkred;
   color: white;
