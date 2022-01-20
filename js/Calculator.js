@@ -20,8 +20,8 @@ export default class Calculator {
     this.computed.innerText = saved;
   }
 
-  onScreen(leticia) {
-    this.current.innerText += leticia;
+  onScreen(number) {
+    this.current.innerText += number;
   }
 
   onClick(element, method) {
@@ -36,7 +36,7 @@ export default class Calculator {
     const query = document.querySelectorAll(element);
     // if a node, return node
     if (query.length) return query;
-    // if a element return the element
+    // if a element return element
     else return document.querySelector(element);
   }
 
