@@ -1,9 +1,9 @@
 import Calculator from './Calculator.js';
 
-const computed = document.querySelector('[data-computed]');
-const current = document.querySelector('[data-current]');
+const computedDisplay = document.querySelector('[data-computed]');
+const currentDisplay = document.querySelector('[data-current]');
 
-const calculator = new Calculator(computed, current);
+const calculator = new Calculator(computedDisplay, currentDisplay);
 
 const digits = {
   numberButtons: calculator.$('[data-number]'),
@@ -17,3 +17,4 @@ calculator.onClick(digits.clearButton, 'clear');
 calculator.onClick(digits.deleteButton, 'delete');
 calculator.onClick(digits.numberButtons, 'onScreen');
 calculator.onClick(digits.operatorButtons, 'chooseOperation');
+calculator.onClick(digits.equalButton, 'equal');

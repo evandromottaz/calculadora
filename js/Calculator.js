@@ -1,35 +1,90 @@
 export default class Calculator {
   constructor(computed, current) {
-    this.computed = computed;
-    this.current = current;
+    this.computedDisplay = computed;
+    this.currentDisplay = current;
+    this.clear();
   }
 
   clear() {
-    this.computed.innerText = '';
-    this.current.innerText = '';
+    this.computed = '';
+    this.current = '';
     this.operation = undefined;
+    this.updateDisplay();
   }
 
   delete() {
-    const totalChar = this.current.innerText.length;
-    this.current.innerText = this.current.innerText.substring(0, totalChar - 1);
+    if (this.lastResult === undefined)
+      this.current = this.currentDisplay.innerText.slice(0, -1);
+    else this.current = this.current.slice(0, -1);
   }
 
-  saveComputed(computed) {
-    let saved = computed;
-    this.computed.innerText = saved;
+  equal() {
+    this.lastResult = undefined;
+    // convert decimal with ',' to '.'
+    const lastComputed = String(this.computed).replace(',', '.');
+    const current = String(this.current).replace(',', '.');
+
+    if (isNaN(lastComputed) && isNaN(current)) return null;
+    switch (this.operation) {
+      case '÷':
+        this.lastResult = Number(lastComputed) / Number(current);
+        break;
+      case '+':
+        this.lastResult = Number(lastComputed) + Number(current);
+        break;
+      case '-':
+        this.lastResult = Number(lastComputed) - Number(current);
+        break;
+      case 'x':
+        this.lastResult = Number(lastComputed) * Number(current);
+        break;
+      default:
+        return null;
+    }
+    this.current = this.lastResult;
+    this.lastResult = undefined;
+    this.operation = undefined;
+    this.computed = '';
+  }
+
+  dotNumber(number) {
+    const stringNumber = String(number);
+    // array that will divide before and after '.'
+    const intNumber = stringNumber.replace(',', '.').split('.')[0];
+    const decNumber = stringNumber.replace(',', '.').split('.')[1];
+    let intDisplay;
+    if (isNaN(intNumber)) return '';
+    else {
+      intDisplay = Number(intNumber).toLocaleString('pt-BR');
+    }
+    if (decNumber != null) return `${intDisplay},${decNumber}`;
+    else {
+      if (intDisplay === '0' && this.current === '') return '';
+      else return intDisplay;
+    }
   }
 
   onScreen(number) {
-    this.current.innerText += number;
+    if (number === ',' && this.current.includes(',')) return;
+    else if (this.operation === undefined && this.lastResult === undefined) {
+      this.lastResult = this.current;
+      return (this.current = String(number));
+    } else this.current += String(number);
   }
 
   onClick(element, method) {
     if (element.length)
       element.forEach((el) =>
-        el.addEventListener('click', () => this[method](el.innerText)),
+        el.addEventListener('click', () => {
+          this[method](el.innerText);
+          this.updateDisplay();
+        }),
       );
-    else element.addEventListener('click', () => this[method]());
+    else
+      element.addEventListener('click', () => {
+        this[method]();
+        this.updateDisplay();
+      });
   }
 
   $(element) {
@@ -41,20 +96,24 @@ export default class Calculator {
   }
 
   chooseOperation(operation) {
-    let saved;
-    switch (operation) {
-      case '÷':
-        if (!this.current.innerText.includes(operation)) {
-          saved = operation;
-          this.computed.innerText = this.current.innerText;
-          this.current.innerText = '';
-        } else if (this.current.innerText.includes(operation)) {
-        }
-        break;
+    if (this.current === '') return null;
+    if (this.computed) {
+      this.equal();
     }
+    this.operation = operation;
+    this.computed = this.current;
+    this.current = '';
   }
 
   updateDisplay() {
-    this.current.innerText = this.current;
+    this.currentDisplay.innerText = this.dotNumber(this.current);
+
+    if (this.operation != null) {
+      this.computedDisplay.innerText = `${this.dotNumber(this.computed)} ${
+        this.operation
+      }`;
+    } else {
+      this.computedDisplay.innerText = '';
+    }
   }
 }
