@@ -65,6 +65,26 @@
   background: black;
 }
 
+/* Animate class */
+
+@keyframes click {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.clicked {
+  animation: click 0.3s forwards;
+}
+
+/* JS classes */
+
 [data-clear] {
   grid-column: 1/3;
 }

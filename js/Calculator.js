@@ -72,17 +72,24 @@ export default class Calculator {
     } else this.current += String(number);
   }
 
+  styles(button) {
+    button.classList.add('clicked');
+    setTimeout(() => button.classList.remove('clicked'), 300);
+  }
+
   onClick(element, method) {
     if (element.length)
       element.forEach((el) =>
         el.addEventListener('click', () => {
           this[method](el.innerText);
+          this.styles(el);
           this.updateDisplay();
         }),
       );
     else
       element.addEventListener('click', () => {
         this[method]();
+        this.styles(element);
         this.updateDisplay();
       });
   }
@@ -90,7 +97,7 @@ export default class Calculator {
   $(element) {
     const query = document.querySelectorAll(element);
     // if a node, return node
-    if (query.length) return query;
+    if (query.length > 1) return query;
     // if a element return element
     else return document.querySelector(element);
   }
