@@ -69,7 +69,8 @@ export default class Calculator {
     else if (this.operation === undefined && this.lastResult === undefined) {
       this.lastResult = this.current;
       return (this.current = String(number));
-    } else this.current += String(number);
+    } else if (this.currentDisplay.innerText.length > 18) return null;
+    else this.current += String(number);
   }
 
   styles(button) {
@@ -113,14 +114,15 @@ export default class Calculator {
   }
 
   updateDisplay() {
+    if (this.current.length > 8)
+      this.currentDisplay.style.fontSize = 1.5 + 'rem';
+    if (this.current.length < 8)
+      this.currentDisplay.style.fontSize = 2.5 + 'rem';
     this.currentDisplay.innerText = this.dotNumber(this.current);
-
-    if (this.operation != null) {
+    if (this.operation != null)
       this.computedDisplay.innerText = `${this.dotNumber(this.computed)} ${
         this.operation
       }`;
-    } else {
-      this.computedDisplay.innerText = '';
-    }
+    else this.computedDisplay.innerText = '';
   }
 }
