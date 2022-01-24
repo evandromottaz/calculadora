@@ -16,5 +16,6 @@ const digits = {
 calculator.onClick(digits.clearButton, 'clear');
 calculator.onClick(digits.deleteButton, 'delete');
 calculator.onClick(digits.numberButtons, 'onScreen');
+calculator.onKeyDown(document);
 calculator.onClick(digits.operatorButtons, 'chooseOperation');
 calculator.onClick(digits.equalButton, 'equal');

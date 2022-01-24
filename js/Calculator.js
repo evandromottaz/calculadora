@@ -73,9 +73,61 @@ export default class Calculator {
     else this.current += String(number);
   }
 
+  sounds(button) {
+    let audio;
+    if (isNaN(button)) {
+      audio = new Audio(`/sounds/${button.innerText}.mp3`);
+      switch (button.innerText) {
+        case '+':
+          audio.play();
+          break;
+        case '-':
+          audio.play();
+          break;
+        case '=':
+          audio.play();
+          break;
+      }
+    }
+  }
+
   styles(button) {
+    this.sounds(button);
     button.classList.add('clicked');
     setTimeout(() => button.classList.remove('clicked'), 300);
+  }
+
+  onKeyDown(document) {
+    document.addEventListener('keydown', ({ key }) => {
+      const btnKey = document.querySelector(`[data-btn='${key}']`);
+      this.styles(btnKey);
+      if (isNaN(key)) {
+        switch (key) {
+          case '=':
+            this.equal();
+            break;
+          case '/':
+            key = '÷';
+            break;
+          case '*':
+            key = 'x';
+            this.chooseOperation(key);
+            break;
+          case '+':
+            this.chooseOperation(key);
+            break;
+          case '-':
+            this.chooseOperation(key);
+            break;
+          case 'Backspace':
+            this.delete();
+            break;
+          default:
+            return null;
+        }
+      } else this.onScreen(key);
+      this.updateDisplay();
+    });
   }
 
   onClick(element, method) {
@@ -118,6 +170,7 @@ export default class Calculator {
       this.currentDisplay.style.fontSize = 1.5 + 'rem';
     if (this.current.length < 8)
       this.currentDisplay.style.fontSize = 2.5 + 'rem';
+
     this.currentDisplay.innerText = this.dotNumber(this.current);
     if (this.operation != null)
       this.computedDisplay.innerText = `${this.dotNumber(this.computed)} ${
