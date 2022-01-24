@@ -76,18 +76,9 @@ export default class Calculator {
   sounds(button) {
     let audio;
     if (isNaN(button)) {
+      if (button.innerText === 'C') return null;
       audio = new Audio(`/sounds/${button.innerText}.mp3`);
-      switch (button.innerText) {
-        case '+':
-          audio.play();
-          break;
-        case '-':
-          audio.play();
-          break;
-        case '=':
-          audio.play();
-          break;
-      }
+      audio.play();
     }
   }
 
