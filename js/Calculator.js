@@ -77,7 +77,8 @@ export default class Calculator {
     let audio;
     if (isNaN(button)) {
       audio = new Audio(`/sounds/${button.innerText}.mp3`);
-      audio.play();
+      if (audio === undefined) return null;
+      else audio.play();
     }
   }
 
