@@ -1,4 +1,5 @@
 import Calculator from './Calculator.js';
+import sounds from '../sounds';
 
 const computedDisplay = document.querySelector('[data-computed]');
 const currentDisplay = document.querySelector('[data-current]');

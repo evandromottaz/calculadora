@@ -76,13 +76,8 @@ export default class Calculator {
   sounds(button) {
     let audio;
     if (isNaN(button)) {
-      if (button.innerText) {
-        audio = new Audio(`/sounds/${button.innerText}.mp3`);
-        audio.play();
-      } else
-        console.log(
-          `The sound (${button.innerText}) that you request, doesn't exist`,
-        );
+      audio = new Audio(`/sounds/${button.innerText}.mp3`);
+      audio.play();
     }
   }
 
